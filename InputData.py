@@ -13,36 +13,40 @@ class HealthStates(Enum):
     POLYP = 1
     PRECANCER = 2
     CANCER = 3
-    CANCER_DEATH = 4
-    NATURAL_DEATH = 5
+    DEATH = 4
 
 # transition matrix
-TRANS_MATRIX = []
+TRANS_MATRIX = [
+    [1, 0, 0, 0, 0],
+    [0.862, 0, 0.074, 0.064, 0],
+    [0.13, 0, 0, 0.87, 0],
+    [0, 0, 0, 0.65, 0.35],
+    [0, 0, 0, 0, 1]
+]
 
 # annual cost of each health state
-ANNUAL_STATE_COST= [
-    0,          # Well
-    0,          # Polyp/Cost of removal
-    0,          # Pre-Cancer/Cost of treatment
-    0,          # Cancer Costs
-    0,          # Cancer Death
-    0,           # Natural Death
-]
+ANNUAL_STATE_COST = [
+    0,           # Well
+    892,         # Polyp/Cost of removal
+    10000,       # Pre-Cancer/Cost of treatment
+    60321,       # Cancer Costs
+    0,           # Cancer Death
+    0]           # Natural Death
+
 
 # annual health utility of each health state
 ANNUAL_STATE_UTILITY = [
-    1.00,            # Well
-    0.75,          # Polyp
-    0.50,          # Pre-Cancer
-    0.25,          # Cancer
-    0,            # Cancer Death
-    0,            # Natural Death
+    1.00,        # Well
+    0.75,        # Polyp
+    0.50,        # Pre-Cancer
+    0.25,        # Cancer
+    0            # Death
 ]
 
-
 # screening costs
-Colonoscopy_COST = 3081
-Colonography_COST = 439
+Colonoscopy_COST = 648.52
+Colonography_COST = 488.29
 
-# Relative rate of
-TREATMENT_RR =
+# relative risk
+Colonoscopy_RR = 0.016
+Colonography_RR = 0.0004
