@@ -24,7 +24,7 @@ TRANS_MATRIX = [
     [0.13, 0, 0, 0.87, 0],
     [0, 0, 0, 0.65, 0.35],
     [0, 0, 0, 0, 1]
-]
+    ]
 
 # annual cost of each health state
 ANNUAL_STATE_COST = [

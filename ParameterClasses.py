@@ -82,10 +82,6 @@ def get_trans_rate_matrix(trans_prob_matrix):
     for row in trans_rate_matrix:
         row.append(mortality_rate)
 
-    # add 2 rows for HIV death and natural death
-    trans_rate_matrix.append([0] * len(HealthStates))
-    trans_rate_matrix.append([0] * len(HealthStates))
-
     return trans_rate_matrix
 
 
