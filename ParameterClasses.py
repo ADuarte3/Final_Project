@@ -38,8 +38,8 @@ class Parameters:
         elif self.therapy == Therapies.GRAPHY:
             # calculate transition probability matrix for the colonography
             self.transRateMatrix = get_trans_rate_matrix_graphy(
-                rate_matrix_mono=get_trans_rate_matrix(trans_prob_matrix=prob_matrix_scopy),
-                graphy_rr=Data.TREATMENT_RR)
+                rate_matrix_scopy=get_trans_rate_matrix(trans_prob_matrix=prob_matrix_scopy),
+                graphy_rr=Data.COLONOGRAPHY_RR)
 
         # annual state costs and utilities
         self.annualStateCosts = Data.ANNUAL_STATE_COST
@@ -48,68 +48,72 @@ class Parameters:
         # discount rate
         self.discountRate = Data.DISCOUNT
 
-        def get_trans_prob_matrix(trans_matrix):
-            """
-            :param trans_matrix: transition matrix containing counts of transitions between states
-            :return: transition probability matrix
-            """
 
-            # initialize transition probability matrix
-            trans_prob_matrix = []
+def get_trans_prob_matrix(trans_matrix):
+    """
+    :param trans_matrix: transition matrix containing counts of transitions between states
+    :return: transition probability matrix
+    """
 
-            # for each row in the transition matrix
-            for row in trans_matrix:
-                # calculate the transition probabilities
-                prob_row = np.array(row) / sum(row)
-                # add this row of transition probabilities to the transition probability matrix
-                trans_prob_matrix.append(prob_row)
+    # initialize transition probability matrix
+    trans_prob_matrix = []
 
-            return trans_prob_matrix
+    # for each row in the transition matrix
+    for row in trans_matrix:
+        # calculate the transition probabilities
+        prob_row = np.array(row) / sum(row)
+        # add this row of transition probabilities to the transition probability matrix
+        trans_prob_matrix.append(prob_row)
 
-        def get_trans_rate_matrix(trans_prob_matrix):
+    return trans_prob_matrix
 
-            # find the transition rate matrix
-            trans_rate_matrix = Markov.discrete_to_continuous(
-                trans_prob_matrix=trans_prob_matrix,
-                delta_t=1)
 
-            # calculate background mortality rate
-            mortality_rate = -np.log(1 - Data.ANNUAL_PROB_BACKGROUND_MORT)
+def get_trans_rate_matrix(trans_prob_matrix):
 
-            # add background mortality rate
-            for row in trans_rate_matrix:
-                row.append(mortality_rate)
+    # find the transition rate matrix
+    trans_rate_matrix = Markov.discrete_to_continuous(
+        trans_prob_matrix=trans_prob_matrix,
+        delta_t=1)
 
-            # add 2 rows for HIV death and natural death
-            trans_rate_matrix.append([0] * len(HealthStates))
-            trans_rate_matrix.append([0] * len(HealthStates))
+    # calculate background mortality rate
+    mortality_rate = -np.log(1 - Data.ANNUAL_PROB_BACKGROUND_MORT)
 
-            return trans_rate_matrix
+    # add background mortality rate
+    for row in trans_rate_matrix:
+        row.append(mortality_rate)
 
-        def get_trans_rate_matrix_combo(rate_matrix_scopy, graphy_rr):
+    # add 2 rows for HIV death and natural death
+    trans_rate_matrix.append([0] * len(HealthStates))
+    trans_rate_matrix.append([0] * len(HealthStates))
 
-            # create an empty list of lists
-            matrix_graphy = []
-            for row in rate_matrix_scopy:
-                matrix_graphy.append([0] * len(row))  # adding a row [0, 0, 0, 0, 0]
+    return trans_rate_matrix
 
-            # populate the colonography matrix
-            # calculate the effect of colonography on non-diagonal elements
-            for s in range(len(matrix_graphy)):
-                # rates to states
-                for next_s in range(s + 1, len(HealthStates) - 1):
-                    matrix_graphy[s][next_s] = graphy_rr * rate_matrix_scopy[s][next_s]
 
-                # rates of background mortality
-                matrix_graphy[s][-1] = rate_matrix_scopy[s][-1]
+def get_trans_rate_matrix_graphy(rate_matrix_scopy, graphy_rr):
 
-            return matrix_graphy
+    # create an empty list of lists
+    matrix_graphy = []
+    for row in rate_matrix_scopy:
+        matrix_graphy.append([0] * len(row))  # adding a row [0, 0, 0, 0, 0]
 
-        # tests
-        if __name__ == '__main__':
-            probMatrix = get_trans_prob_matrix(Data.TRANS_MATRIX)
-            rateMatrixScopy = get_trans_rate_matrix(probMatrix)
-            rateMatrixGraphy = get_trans_rate_matrix_graphy(rateMatrixScopy, Data.TREATMENT_RR)
+    # populate the colonography matrix
+    # calculate the effect of colonography on non-diagonal elements
+    for s in range(len(matrix_graphy)):
+        # rates to states
+        for next_s in range(s + 1, len(HealthStates) - 1):
+            matrix_graphy[s][next_s] = graphy_rr * rate_matrix_scopy[s][next_s]
 
-            print(rateMatrixScopy)
-            print(rateMatrixGraphy)
+        # rates of background mortality
+        matrix_graphy[s][-1] = rate_matrix_scopy[s][-1]
+
+    return matrix_graphy
+
+
+# tests
+if __name__ == '__main__':
+    probMatrix = get_trans_prob_matrix(Data.TRANS_MATRIX)
+    rateMatrixScopy = get_trans_rate_matrix(probMatrix)
+    rateMatrixGraphy = get_trans_rate_matrix_graphy(rateMatrixScopy, Data.COLONOGRAPHY_RR)
+
+    print(rateMatrixScopy)
+    print(rateMatrixGraphy)

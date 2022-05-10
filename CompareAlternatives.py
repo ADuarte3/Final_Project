@@ -7,16 +7,16 @@ import Support as Support
 # simulating colonoscopy screening
 # create a cohort
 cohort_scopy = Cls.Cohort(id=0,
-                         pop_size=D.POP_SIZE,
-                         parameters=P.Parameters(therapy=P.Therapies.SCOPY))
+                          pop_size=D.POP_SIZE,
+                          parameters=P.Parameters(therapy=P.Therapies.SCOPY))
 # simulate the cohort
 cohort_scopy.simulate(sim_length=D.SIM_LENGTH)
 
 # simulating colonography screening
 # create a cohort
 cohort_graphy = Cls.Cohort(id=1,
-                          pop_size=D.POP_SIZE,
-                          parameters=P.Parameters(therapy=P.Therapies.GRAPHY))
+                           pop_size=D.POP_SIZE,
+                           parameters=P.Parameters(therapy=P.Therapies.GRAPHY))
 # simulate the cohort
 cohort_graphy.simulate(sim_length=D.SIM_LENGTH)
 

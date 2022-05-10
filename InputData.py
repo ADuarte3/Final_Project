@@ -8,12 +8,14 @@ DISCOUNT = 0.03     # annual discount rate
 
 ANNUAL_PROB_BACKGROUND_MORT = 9.1/1000
 
+
 class HealthStates(Enum):
     WELL = 0
     POLYP = 1
     PRECANCER = 2
     CANCER = 3
     DEATH = 4
+
 
 # transition matrix
 TRANS_MATRIX = [
@@ -30,8 +32,7 @@ ANNUAL_STATE_COST = [
     892,         # Polyp/Cost of removal
     10000,       # Pre-Cancer/Cost of treatment
     60321,       # Cancer Costs
-    0,           # Cancer Death
-    0]           # Natural Death
+    0]           # Death
 
 
 # annual health utility of each health state
@@ -48,5 +49,4 @@ Colonoscopy_COST = 648.52
 Colonography_COST = 488.29
 
 # relative risk
-Colonoscopy_RR = 0.016
-Colonography_RR = 0.0004
+COLONOGRAPHY_RR = 0.0004

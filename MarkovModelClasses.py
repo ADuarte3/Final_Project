@@ -73,7 +73,7 @@ class PatientStateMonitor:
         """
 
         # update survival time
-        if new_state in (HealthStates.CANCER_DEATH, HealthStates.NATURAL_DEATH):
+        if new_state in (HealthStates.DEATH, HealthStates.DEATH):
             self.survivalTime = time
 
         # update time until Cancer
