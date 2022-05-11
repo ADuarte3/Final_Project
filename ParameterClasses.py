@@ -17,7 +17,7 @@ class Parameters:
         self.therapy = therapy
 
         # initial health state
-        self.initialHealthState = Data.HealthStates.WELL
+        self.initialHealthState = HealthStates.WELL
 
         # annual treatment cost
         if self.therapy == Therapies.SCOPY:
@@ -81,6 +81,9 @@ def get_trans_rate_matrix(trans_prob_matrix):
     # add background mortality rate
     for row in trans_rate_matrix:
         row.append(mortality_rate)
+
+    trans_rate_matrix.append([0] * len(HealthStates))
+    trans_rate_matrix.append([0] * len(HealthStates))
 
     return trans_rate_matrix
 

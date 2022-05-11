@@ -16,12 +16,6 @@ def print_outcomes(sim_outcomes, therapy_name):
                                          alpha=D.ALPHA,
                                          deci=2)
 
-    # mean and confidence interval text of time to cancer
-    time_to_cancer_death_CI_text = sim_outcomes.statTimeToCancer\
-        .get_formatted_mean_and_interval(interval_type='c',
-                                         alpha=D.ALPHA,
-                                         deci=2)
-
     # mean and confidence interval text of discounted total cost
     cost_mean_CI_text = sim_outcomes.statCost\
         .get_formatted_mean_and_interval(interval_type='c',
@@ -39,8 +33,6 @@ def print_outcomes(sim_outcomes, therapy_name):
     print(therapy_name)
     print("  Estimate of mean survival time and {:.{prec}%} confidence interval:".format(1 - D.ALPHA, prec=0),
           survival_mean_CI_text)
-    print("  Estimate of mean time to cancer and {:.{prec}%} confidence interval:".format(1 - D.ALPHA, prec=0),
-          time_to_cancer_death_CI_text)
     print("  Estimate of discounted cost and {:.{prec}%} confidence interval:".format(1 - D.ALPHA, prec=0),
           cost_mean_CI_text)
     print("  Estimate of discounted utility and {:.{prec}%} confidence interval:".format(1 - D.ALPHA, prec=0),

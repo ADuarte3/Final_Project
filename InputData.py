@@ -10,20 +10,21 @@ ANNUAL_PROB_BACKGROUND_MORT = 9.1/1000
 
 
 class HealthStates(Enum):
+
     WELL = 0
     POLYP = 1
     PRECANCER = 2
     CANCER = 3
-    DEATH = 4
+    CANCER_DEATH = 4
+    NATURAL_DEATH = 5
 
 
 # transition matrix
 TRANS_MATRIX = [
-    [1, 0, 0, 0, 0],
-    [0.862, 0, 0.074, 0.064, 0],
-    [0.13, 0, 0, 0.87, 0],
-    [0, 0, 0, 0.65, 0.35],
-    [0, 0, 0, 0, 1]
+    [1, 0, 0, 0, 0],        # well
+    [0.862, 0, 0.074, 0.064, 0],     # polyp
+    [0.13, 0, 0, 0.87, 0],     # precancer
+    [0, 0, 0, 0.65, 0.35]     # cancer
     ]
 
 # annual cost of each health state

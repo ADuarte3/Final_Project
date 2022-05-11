@@ -20,7 +20,7 @@ cohort_graphy = Cls.Cohort(id=1,
 # simulate the cohort
 cohort_graphy.simulate(sim_length=D.SIM_LENGTH)
 
-# print the estimates for the mean survival time and mean time to cancer
+# print the estimates for the mean survival time
 Support.print_outcomes(sim_outcomes=cohort_scopy.cohortOutcomes,
                        therapy_name=P.Therapies.SCOPY)
 Support.print_outcomes(sim_outcomes=cohort_graphy.cohortOutcomes,
